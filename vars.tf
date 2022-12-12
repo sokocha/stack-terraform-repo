@@ -1,6 +1,8 @@
-variable "AWS_ACCESS_KEY" {}
+variable "AWS_ACCESS_KEY" {
+}
 
-variable "AWS_SECRET_KEY" {}
+variable "AWS_SECRET_KEY" {
+}
 
 
 variable "AWS_REGION" {
@@ -23,4 +25,20 @@ variable "AMIS" {
     eu-west-1 = "ami-844e0bf7"
   }
 }
+
+variable "bucket_prefix"{
+  type = string
+  description = "crates unique name beginning with specified prefix"
+  default =  "okocha-buck-"
+}
+
+variable "tags" {
+  type = map
+  description = "(Optional) A mapping of tags to assign to bucket."
+  default = {
+        environment = "DEV"
+        terraform = "true"
+  }
+}
+
 
