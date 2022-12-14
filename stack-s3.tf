@@ -12,6 +12,19 @@ resource "aws_s3_bucket" "my-s3-bucket" {
 resource "aws_s3_bucket_acl" "my-s3-bucket" {
   bucket = aws_s3_bucket.my-s3-bucket.id
   acl    = "private"
+  lifecycle_rule {
+    id = "archive"
+    enabled = true
+    transition {
+      days = 30
+      storage_class = "STANDARD_IA"
+    }
+    transition {
+      days = 60
+      storage_class = "GLACIER"
+    }
+  }
+
 }
 
 resource "aws_s3_bucket_versioning" "versioning_example" {
