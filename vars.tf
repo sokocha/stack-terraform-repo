@@ -26,10 +26,16 @@ variable "AMIS" {
   }
 }
 
-variable "bucket_prefix"{
+variable "source_prefix"{
   type = string
   description = "crates unique name beginning with specified prefix"
-  default =  "okocha-buck-"
+  default =  "okocha-source-buck-"
+}
+
+variable "destination_prefix"{
+  type = string
+  description = "destination bucket"
+  default =  "okocha-dest-buck-"
 }
 
 variable "tags" {
@@ -40,5 +46,12 @@ variable "tags" {
         terraform = "true"
   }
 }
+
+variable "versioning_is_enabled" {
+  type = bool
+  description = "Flag to indicate if versioning is on or off"
+  default = true
+}
+
 
 

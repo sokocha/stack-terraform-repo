@@ -48,31 +48,17 @@ resource "aws_s3_bucket_acl" "destination-bucket" {
 
 
 
-resource "aws_s3_bucket_versioning" "versioning_source_enabled" {
+resource "aws_s3_bucket_versioning" "versioning_source" {
   bucket = aws_s3_bucket.source-bucket.id
   versioning_configuration {
-    status = "Enabled"
+    status = var.versioning_is_enabled == true ? "Enabled" : "Disabled"
   }
 }
 
-resource "aws_s3_bucket_versioning" "versioning_source_disabled" {
-  bucket = aws_s3_bucket.source-bucket.id
-  versioning_configuration {
-    status = "Disabled"
-  }
-}
-
-resource "aws_s3_bucket_versioning" "versioning_destination_enabled" {
+resource "aws_s3_bucket_versioning" "versioning_destination" {
   bucket = aws_s3_bucket.destination-bucket.id
   versioning_configuration {
-    status = "Enabled"
-  }
-}
-
-resource "aws_s3_bucket_versioning" "versioning_destination_disabled" {
-  bucket = aws_s3_bucket.destination-bucket.id
-  versioning_configuration {
-    status = "Disabled"
+    status = var.versioning_is_enabled == true ? "Enabled" : "Disabled"
   }
 }
 
