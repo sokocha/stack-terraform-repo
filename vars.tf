@@ -53,5 +53,9 @@ variable "versioning_is_enabled" {
   default = true
 }
 
-
+variable "is_kms" {
+  type = bool
+  description = "Flag to set encryption"
+  default = true
+}
 
