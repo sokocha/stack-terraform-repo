@@ -148,7 +148,7 @@ resource "aws_s3_bucket_website_configuration" "site-clone" {
   }
 }
 
-# BUCKET LOGGING
+# BUCKET LOGGING #SERVER ACCESS LOGGING
 resource "aws_s3_bucket" "log_bucket" {
   bucket = "dalogbuckoko"
   force_destroy = true
@@ -183,7 +183,7 @@ resource "aws_s3_object" "object2" {
 
 }
 
-#SERVER ACCESS LOGGING
+
 
 
 #OBJECT LEVEL LOGGING
@@ -209,5 +209,45 @@ resource "aws_cloudtrail" "cloudtrail" {
 
 
 #CROSS ACCOUNT REPLICATION
+
+
+
+# BUCKET LIFECYCLE CONFIGURATION
+
+resource "aws_s3_bucket_lifecycle_configuration" "source-bucket-config" {
+  bucket = aws_s3_bucket.source-bucket.bucket
+
+  rule {
+    id = "log"
+
+    expiration {
+      days = 90
+    }
+
+    filter {
+      and {
+        prefix = "log/"
+
+        tags = {
+          rule      = "log"
+          autoclean = "true"
+        }
+      }
+    }
+
+    status = "Enabled"
+
+    transition {
+      days          = 30
+      storage_class = "STANDARD_IA"
+    }
+
+    transition {
+      days          = 60
+      storage_class = "GLACIER"
+    }
+  }
+
+}
 
 
